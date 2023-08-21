@@ -1,5 +1,5 @@
 <?php
-session_start(); //Recordamos sesión
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +18,14 @@ session_start(); //Recordamos sesión
         echo '
             <header>
 		        <div class="main-header">
-                <div class="logo"><a class="logo" href="index.php">MUÉVETE CON SALLEGO</a></div>			
-			        <nav>
-				        <a>'.$_SESSION['name'].'</a>
-                        <a href="logout.php">Cerrar sesión</a>				
-			        </nav>
+                    <div class="logo"><a class="logo" href="index.php">MUÉVETE CON SALLEGO</a></div>			
+                    <nav>
+                        <a>Bienvenid@: '.$_SESSION['name'].'</a>';                
+                        if($_SESSION["rol"] == 'admin'){ //Si la sesión es de un admin, dispondrá también de un link que le llevará al panel de administración de usuarios
+                            echo '<a href="/admin/admin.php">Administrar usuarios</a>';
+                        }
+                        echo '<a href="logout.php">Cerrar sesión</a>                		
+                    </nav>
 		        </div>
 	        </header>';
     }else { //Si no hay sesión, mostraremos el link para iniciarla.

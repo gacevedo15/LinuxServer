@@ -20,15 +20,31 @@
     <link rel="stylesheet" type="text/css" href="../css/mystyle.css" />
 </head>
 <body>
-    <header>
-		<div class="main-header">
-        <div class="logo"><a class="logo" href="../index.php">MUÉVETE CON SALLEGO</a></div>			
-			<nav>
-				<a><?php echo ''.$_SESSION['name'].''?></a> <!-- Mostramos nombre de la sesión en header -->
-                <a href="../logout.php">Cerrar sesión</a>				
-			</nav>
-		</div>
-	</header>
+    <?php
+    //De cabecera mostraremos el nombre de la app y en dependencia de si hay sesión iniciada o no, mostraremos opciones.
+        if(isset($_SESSION["name"])){ // Si hay sesión, mostraremos el nombre de la sesión, así como la opción para cerrar la sesión.
+            echo '
+                <header>
+                    <div class="main-header">
+                        <div class="logo"><a class="logo" href="../index.php">MUÉVETE CON SALLEGO</a></div>			
+                        <nav>
+                            <a>Bienvenid@: '.$_SESSION['name'].'</a>';                
+                            echo '<a href="../logout.php">Cerrar sesión</a>                		
+                        </nav>
+                    </div>
+                </header>';
+        }else { //Si no hay sesión, mostraremos el link para iniciarla.
+            echo ' 
+                <header>
+		            <div class="main-header">
+                    <div class="logo"><a class="logo" href="index.php">MUÉVETE CON SALLEGO</a></div>			
+			            <nav>
+				            <a href="login.php">Iniciar sesión</a>				
+			            </nav>
+		            </div>
+	            </header>';
+        }
+    ?> 
     <a class="back" href="../admin/admin.php">Volver atrás</a>  
     <div class="cpanel"><h1>Actualizar usuario:</h1></div>
     <table>
@@ -38,7 +54,7 @@
             <th scope="col">Username</th>
             <th scope="col">Password</th>
             <th scope="col">Uso</th>
-            <th scope="col">Precio por minuto</th>  
+            <th scope="col">Precio por segundo</th>  
             <th scope="col">Facturación</th>  
             <th scope="col">Actualizar</th>         
         </tr> 

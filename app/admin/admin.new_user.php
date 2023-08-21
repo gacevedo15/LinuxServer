@@ -20,15 +20,31 @@
     <link rel="stylesheet" type="text/css" href="../css/mystyle.css" />
 </head>
 <body>
-    <header>
-		<div class="main-header">
-        <div class="logo"><a class="logo" href="../index.php">MUÉVETE CON SALLEGO</a></div>			
-			<nav>
-				<a><?php echo ''.$_SESSION['name'].''?></a> <!-- Mostramos nombre de la sesión en header -->
-                <a href="../logout.php">Cerrar sesión</a>				
-			</nav>
-		</div>
-	</header>
+    <?php
+    //De cabecera mostraremos el nombre de la app y en dependencia de si hay sesión iniciada o no, mostraremos opciones.
+        if(isset($_SESSION["name"])){ // Si hay sesión, mostraremos el nombre de la sesión, así como la opción para cerrar la sesión.
+            echo '
+                <header>
+                    <div class="main-header">
+                        <div class="logo"><a class="logo" href="../index.php">MUÉVETE CON SALLEGO</a></div>			
+                        <nav>
+                            <a>Bienvenid@: '.$_SESSION['name'].'</a>';                
+                            echo '<a href="../logout.php">Cerrar sesión</a>                		
+                        </nav>
+                    </div>
+                </header>';
+        }else { //Si no hay sesión, mostraremos el link para iniciarla.
+            echo ' 
+                <header>
+		            <div class="main-header">
+                    <div class="logo"><a class="logo" href="index.php">MUÉVETE CON SALLEGO</a></div>			
+			            <nav>
+				            <a href="login.php">Iniciar sesión</a>				
+			            </nav>
+		            </div>
+	            </header>';
+        }
+    ?> 
 <a class="back" href="../admin/admin.php">Volver atrás</a>  
 <div class="cpanel"><h1>Registrar nuevo usuario:</h1></div>
     <table>
@@ -36,7 +52,7 @@
             <th scope="col">Rol</th>
             <th scope="col">Username</th>
             <th scope="col">Password</th>
-            <th scope="col">Precio por minuto</th>  
+            <th scope="col">Precio por segundo</th>  
             <th scope="col">Registrar</th>         
         </tr> 
                  
@@ -50,12 +66,12 @@
                 if(empty($_POST['username']) || empty($_POST["password"]) || empty($_POST["precio"])){ //Si está vacío alguno de los campos, no se enviará el form y se mostrará mensaje de error indicando que debe rellenar los campos
                     echo '<h1 class="error_user_not_logged">Rellena todos los campos, por favor</h1>'; 
                 }else{ //Si se rellenan todos los campos, se ejecutará una consulta tipo INSERT, la cual añadirá al nuevo usuario a la tabla usuarios             
-                $sql="INSERT INTO usuarios (rol, username, password, precio)
-                VALUES ('" . $_POST["rol"] . "', '" . $_POST["username"] . "', '". MD5($_POST["password"])."', '" . $_POST["precio"] . "')"; 
-                $result = $conn->query($sql); 
-                closeConn($conn);     
-                header("Location:../admin/admin.php");    
-               }
+                    $sql="INSERT INTO usuarios (rol, username, password, precio)
+                    VALUES ('" . $_POST["rol"] . "', '" . $_POST["username"] . "', '". MD5($_POST["password"])."', '" . $_POST["precio"] . "')"; 
+                    $result = $conn->query($sql); 
+                    closeConn($conn);     
+                    header("Location:../admin/admin.php");    
+                }
             }             
         ?>
            
